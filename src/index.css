@@ -1,0 +1,86 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Keyflow design tokens
+
+   Semantic colors are plain CSS variables so a theme can be swapped at runtime
+   simply by setting `data-theme` on the <html> element. `@theme inline` maps
+   each one to a Tailwind color utility, e.g. bg-base / text-fg / text-primary /
+   text-correct / text-error.
+--------------------------------------------------------------------------- */
+@theme inline {
+  --font-mono:
+    'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo,
+    Consolas, 'DejaVu Sans Mono', monospace;
+  --font-sans:
+    ui-sans-serif, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --color-base: var(--base);
+  --color-surface: var(--surface);
+  --color-overlay: var(--overlay);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-correct: var(--correct);
+  --color-error: var(--error);
+  --color-caret: var(--caret);
+}
+
+/* Default theme — "Midnight" (dark) */
+:root,
+[data-theme='dark'] {
+  --base: #0e1116;
+  --surface: #161b22;
+  --overlay: #1f2630;
+  --fg: #e6edf3;
+  --muted: #8b949e;
+  --subtle: #3a424d;
+  --primary: #e2b714;
+  --primary-soft: #c79f12;
+  --correct: #7ee787;
+  --error: #ff7b72;
+  --caret: #e2b714;
+}
+
+/* "Daylight" (light) */
+[data-theme='light'] {
+  --base: #f4f4f5;
+  --surface: #ffffff;
+  --overlay: #e9e9ec;
+  --fg: #1c2024;
+  --muted: #6b7280;
+  --subtle: #c7cad1;
+  --primary: #b9890b;
+  --primary-soft: #9a7209;
+  --correct: #1a7f37;
+  --error: #cf222e;
+  --caret: #b9890b;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--base);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Honor users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
