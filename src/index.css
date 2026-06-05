@@ -67,6 +67,63 @@
   --blob-c: rgba(50, 200, 190, 0.16);
 }
 
+/* "Aurora Glass" — frosted glass over a slow aurora */
+[data-theme='aurora'] {
+  --base: #06070d;
+  --surface: #131826;
+  --overlay: #1b2236;
+  --fg: #eef1f8;
+  --muted: #8a93b5;
+  --subtle: #39415c;
+  --primary: #a9c2ff;
+  --primary-soft: #7f9bf0;
+  --correct: #8fe0c0;
+  --error: #ff9aa2;
+  --caret: #bcd0ff;
+  --on-primary: #10162a;
+  --blob-a: rgba(41, 211, 158, 0.36);
+  --blob-b: rgba(107, 139, 255, 0.36);
+  --blob-c: rgba(176, 123, 255, 0.32);
+}
+
+/* "Pressroom" — paper-white editorial */
+[data-theme='pressroom'] {
+  --base: #f3f1ea;
+  --surface: #ffffff;
+  --overlay: #e8e5db;
+  --fg: #14110d;
+  --muted: #6b6358;
+  --subtle: #b6afa1;
+  --primary: #e5351f;
+  --primary-soft: #c12a16;
+  --correct: #1a7f37;
+  --error: #cf222e;
+  --caret: #e5351f;
+  --on-primary: #ffffff;
+  --blob-a: transparent;
+  --blob-b: transparent;
+  --blob-c: transparent;
+}
+
+/* "Overdrive" — neon synthwave */
+[data-theme='overdrive'] {
+  --base: #0b0618;
+  --surface: #181030;
+  --overlay: #241642;
+  --fg: #f3e9ff;
+  --muted: #9a86c8;
+  --subtle: #4a3a72;
+  --primary: #ff3df0;
+  --primary-soft: #d12fc4;
+  --correct: #6ff7ff;
+  --error: #ff4d6d;
+  --caret: #ff3df0;
+  --on-primary: #1a0220;
+  --blob-a: rgba(255, 61, 240, 0.32);
+  --blob-b: rgba(61, 240, 255, 0.28);
+  --blob-c: rgba(140, 70, 230, 0.32);
+}
+
 html,
 body,
 #root {
@@ -92,6 +149,41 @@ body {
 }
 [data-theme='light'] .liquid-bg {
   background: linear-gradient(150deg, #eef3f4, #e9edf2 55%, #efeaf4);
+}
+[data-theme='aurora'] .liquid-bg {
+  background: linear-gradient(160deg, #05060a, #090a12 55%, #0b0a16);
+}
+[data-theme='pressroom'] .liquid-bg {
+  background: #f3f1ea;
+}
+[data-theme='pressroom'] .blob {
+  display: none;
+}
+[data-theme='overdrive'] .liquid-bg {
+  background: linear-gradient(180deg, #170a33 0%, #0b0618 70%);
+}
+[data-theme='overdrive'] .liquid-bg::after {
+  content: '';
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 0;
+  height: 42%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 61, 240, 0.35) 0 1px,
+      transparent 1px 52px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(61, 240, 255, 0.3) 0 1px,
+      transparent 1px 38px
+    );
+  transform: perspective(420px) rotateX(62deg);
+  transform-origin: bottom center;
+  mask-image: linear-gradient(transparent, #000 60%);
+  pointer-events: none;
 }
 .blob {
   position: absolute;

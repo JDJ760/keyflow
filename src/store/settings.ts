@@ -2,7 +2,20 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { TestMode } from '../engine/types'
 
-export type ThemeName = 'liquid' | 'light'
+export type ThemeName =
+  | 'liquid'
+  | 'aurora'
+  | 'pressroom'
+  | 'overdrive'
+  | 'light'
+
+export const THEME_OPTIONS: { id: ThemeName; label: string }[] = [
+  { id: 'liquid', label: 'Liquid Flow' },
+  { id: 'aurora', label: 'Aurora Glass' },
+  { id: 'pressroom', label: 'Pressroom' },
+  { id: 'overdrive', label: 'Overdrive' },
+  { id: 'light', label: 'Daylight' },
+]
 
 export interface SettingsState {
   mode: TestMode

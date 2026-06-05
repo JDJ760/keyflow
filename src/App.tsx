@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 import { useSettings } from './store/settings'
 import { LiquidBackground } from './components/LiquidBackground'
 import { TypingView } from './views/TypingView'
+import { ThemePicker } from './components/ThemePicker'
 
 export default function App() {
   const theme = useSettings((s) => s.theme)
-  const setTheme = useSettings((s) => s.setTheme)
 
   // Reflect the chosen theme on <html> so the CSS variables switch.
   useEffect(() => {
@@ -20,13 +20,7 @@ export default function App() {
           <h1 className="font-mono text-2xl font-bold tracking-tight">
             key<span className="text-primary">flow</span>
           </h1>
-          <button
-            type="button"
-            onClick={() => setTheme(theme === 'liquid' ? 'light' : 'liquid')}
-            className="text-sm text-muted transition-colors hover:text-fg"
-          >
-            {theme === 'liquid' ? '◐ light' : '◑ dark'}
-          </button>
+          <ThemePicker />
         </header>
 
         <main className="flex flex-1 flex-col">
