@@ -3,10 +3,9 @@
 /* ---------------------------------------------------------------------------
    Keyflow design tokens
 
-   Semantic colors are plain CSS variables so a theme can be swapped at runtime
-   simply by setting `data-theme` on the <html> element. `@theme inline` maps
-   each one to a Tailwind color utility, e.g. bg-base / text-fg / text-primary /
-   text-correct / text-error.
+   Semantic colors are CSS variables so a theme can be swapped at runtime by
+   setting `data-theme` on <html>. `@theme inline` maps each to a Tailwind color
+   utility (bg-base, text-fg, text-primary, text-correct, text-error, …).
 --------------------------------------------------------------------------- */
 @theme inline {
   --font-mono:
@@ -26,37 +25,46 @@
   --color-correct: var(--correct);
   --color-error: var(--error);
   --color-caret: var(--caret);
+  --color-on-primary: var(--on-primary);
 }
 
-/* Default theme — "Midnight" (dark) */
+/* Default theme — "Liquid Flow" */
 :root,
-[data-theme='dark'] {
-  --base: #0e1116;
-  --surface: #161b22;
-  --overlay: #1f2630;
-  --fg: #e6edf3;
-  --muted: #8b949e;
-  --subtle: #3a424d;
-  --primary: #e2b714;
-  --primary-soft: #c79f12;
-  --correct: #7ee787;
-  --error: #ff7b72;
-  --caret: #e2b714;
+[data-theme='liquid'] {
+  --base: #0a1217;
+  --surface: #101c22;
+  --overlay: #16252d;
+  --fg: #e7f7f6;
+  --muted: #84a2a4;
+  --subtle: #3c545b;
+  --primary: #36e0d4;
+  --primary-soft: #2bb6ad;
+  --correct: #6fe8c2;
+  --error: #ff8a80;
+  --caret: #36e0d4;
+  --on-primary: #04201e;
+  --blob-a: rgba(40, 180, 175, 0.4);
+  --blob-b: rgba(120, 70, 210, 0.38);
+  --blob-c: rgba(50, 220, 210, 0.22);
 }
 
-/* "Daylight" (light) */
+/* "Daylight" — a clean light alternative */
 [data-theme='light'] {
-  --base: #f4f4f5;
+  --base: #eef2f3;
   --surface: #ffffff;
-  --overlay: #e9e9ec;
-  --fg: #1c2024;
-  --muted: #6b7280;
-  --subtle: #c7cad1;
-  --primary: #b9890b;
-  --primary-soft: #9a7209;
-  --correct: #1a7f37;
-  --error: #cf222e;
-  --caret: #b9890b;
+  --overlay: #e2eaec;
+  --fg: #11201f;
+  --muted: #5c7274;
+  --subtle: #b6c5c6;
+  --primary: #119c91;
+  --primary-soft: #0e7d74;
+  --correct: #0f8f63;
+  --error: #d2453b;
+  --caret: #119c91;
+  --on-primary: #ffffff;
+  --blob-a: rgba(40, 180, 175, 0.22);
+  --blob-b: rgba(120, 70, 210, 0.16);
+  --blob-c: rgba(50, 200, 190, 0.16);
 }
 
 html,
@@ -72,6 +80,140 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* ----------------------------- Liquid background ------------------------- */
+.liquid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(150deg, #07141a, #090912 55%, #0c0a1c);
+}
+[data-theme='light'] .liquid-bg {
+  background: linear-gradient(150deg, #eef3f4, #e9edf2 55%, #efeaf4);
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  will-change: transform;
+}
+.blob-a {
+  width: 46vw;
+  height: 46vw;
+  left: -6vw;
+  top: -10vh;
+  background: radial-gradient(circle, var(--blob-a), transparent 65%);
+  animation: drift-a 24s ease-in-out infinite alternate;
+}
+.blob-b {
+  width: 52vw;
+  height: 52vw;
+  right: -12vw;
+  bottom: -16vh;
+  background: radial-gradient(circle, var(--blob-b), transparent 65%);
+  animation: drift-b 28s ease-in-out infinite alternate;
+}
+.blob-c {
+  width: 40vw;
+  height: 40vw;
+  left: 42%;
+  top: 26%;
+  background: radial-gradient(circle, var(--blob-c), transparent 60%);
+  animation: drift-c 32s ease-in-out infinite alternate;
+}
+@keyframes drift-a {
+  to {
+    transform: translate(7vw, 6vh) scale(1.1);
+  }
+}
+@keyframes drift-b {
+  to {
+    transform: translate(-6vw, -5vh) scale(1.08);
+  }
+}
+@keyframes drift-c {
+  to {
+    transform: translate(-5vw, 4vh) scale(1.12);
+  }
+}
+
+/* ------------------------------- Typing area ----------------------------- */
+.typing {
+  font-family: var(--font-mono);
+  font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+  line-height: 2.05;
+  letter-spacing: 0.3px;
+}
+.word {
+  display: inline-block;
+  margin-right: 0.6ch;
+  white-space: nowrap;
+}
+.char {
+  color: var(--subtle);
+  transition: color 0.08s ease;
+}
+.char.correct {
+  color: var(--fg);
+}
+.char.incorrect {
+  color: var(--error);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--error) 60%, transparent);
+}
+.char.extra {
+  color: var(--error);
+  opacity: 0.55;
+}
+
+/* Droplet caret */
+.caret {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  vertical-align: baseline;
+}
+.caret::before {
+  content: '';
+  position: absolute;
+  left: -0.04em;
+  top: 0.06em;
+  width: 0.16em;
+  height: 1.4em;
+  border-radius: 6px;
+  background: var(--caret);
+  box-shadow: 0 0 14px 2px color-mix(in srgb, var(--caret) 65%, transparent);
+  animation: caret-pulse 1.05s ease-in-out infinite;
+}
+@keyframes caret-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ------------------------------- Flow gauge ------------------------------ */
+.gauge {
+  position: relative;
+  width: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fg) 8%, transparent);
+  overflow: hidden;
+}
+.gauge-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: linear-gradient(var(--primary), var(--primary-soft) 70%, #7a46d2);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--primary) 60%, transparent);
+  transition: height 0.25s ease;
 }
 
 /* Honor users who prefer reduced motion. */

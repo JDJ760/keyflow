@@ -26,15 +26,17 @@ data through someone else's servers. Keyflow is built around three ideas:
 
 ### Available now
 
-- Clean, modern UI with a runtime **theme system** (Midnight / Daylight to start)
-- Strict, type-safe foundation (React 19 + TypeScript + Tailwind v4 on Vite)
+- **Core typing test** — `time`, `words`, `quote`, and `zen` modes with live WPM,
+  accuracy, and consistency, character-by-character feedback, and a smooth droplet caret
+- **Results screen** — raw WPM, consistency, time, character breakdown, and personal bests
+- The signature **Liquid Flow** theme (plus a light theme) on a token-based theme system
+- Framework-free typing engine with **25 unit tests**; strict React 19 + TypeScript + Tailwind v4
 - Local-first architecture with a hardened security baseline (strict CSP, zero trackers)
 
 ### Coming next (see the [Roadmap](#-roadmap))
 
-- Core typing test — timed / word-count / quote / zen modes with live WPM, accuracy & consistency
-- **Adaptive coaching** — weak-key detection, auto-generated drills, live keyboard heatmap
 - **Rich stats** — history charts, practice calendar, per-key & per-finger breakdowns, export/import
+- **Adaptive coaching** — weak-key detection, auto-generated drills, live keyboard heatmap
 - Progression (XP, streaks, achievements), arcade modes (Falling Words, race-your-ghost), and a desktop build
 
 ## 🚀 Getting started
@@ -63,17 +65,17 @@ npm run preview   # serve the production build locally
 
 ## 🧰 Scripts
 
-| Script                  | What it does                                  |
-| ----------------------- | --------------------------------------------- |
-| `npm run dev`           | Start the Vite dev server with HMR            |
-| `npm run build`         | Type-check (`tsc -b`) and build to `dist/`    |
-| `npm run preview`       | Preview the production build                  |
-| `npm run test`          | Run unit tests in watch mode (Vitest)         |
-| `npm run test:run`      | Run unit tests once                           |
-| `npm run test:coverage` | Run tests with a coverage report              |
-| `npm run lint`          | Lint with ESLint                              |
-| `npm run format`        | Format with Prettier                          |
-| `npm run typecheck`     | Type-check the whole project                  |
+| Script                  | What it does                               |
+| ----------------------- | ------------------------------------------ |
+| `npm run dev`           | Start the Vite dev server with HMR         |
+| `npm run build`         | Type-check (`tsc -b`) and build to `dist/` |
+| `npm run preview`       | Preview the production build               |
+| `npm run test`          | Run unit tests in watch mode (Vitest)      |
+| `npm run test:run`      | Run unit tests once                        |
+| `npm run test:coverage` | Run tests with a coverage report           |
+| `npm run lint`          | Lint with ESLint                           |
+| `npm run format`        | Format with Prettier                       |
+| `npm run typecheck`     | Type-check the whole project               |
 
 ## 🗂️ Project structure
 
@@ -110,15 +112,15 @@ See [SECURITY.md](SECURITY.md) for the full policy and how to report a vulnerabi
 
 ## 🧭 Roadmap
 
-| Phase | Focus                                                                        | Status      |
-| ----- | ---------------------------------------------------------------------------- | ----------- |
-| 0     | Foundations — tooling, security baseline, CI/CD, docs                        | ✅ Done      |
-| 1     | Core typing engine + clean UI (timed / words / quote / zen, live stats)      | 🔜 Next     |
-| 2     | Rich stats & themes (history charts, practice calendar, export/import)       | Planned     |
-| 3     | Adaptive coaching (weak-key drills, keyboard heatmap, progressive unlock)    | Planned     |
-| 4     | Progression & rewards (XP, streaks, achievements, daily challenge)           | Later       |
-| 5     | Arcade modes (Falling Words, race-your-ghost, survival)                      | Later       |
-| 6     | Desktop app (Tauri) + full accessibility pass                                | Later       |
+| Phase | Focus                                                                     | Status  |
+| ----- | ------------------------------------------------------------------------- | ------- |
+| 0     | Foundations — tooling, security baseline, CI/CD, docs                     | ✅ Done |
+| 1     | Core typing engine + clean UI (timed / words / quote / zen, live stats)   | ✅ Done |
+| 2     | Rich stats & themes (history charts, practice calendar, export/import)    | 🔜 Next |
+| 3     | Adaptive coaching (weak-key drills, keyboard heatmap, progressive unlock) | Planned |
+| 4     | Progression & rewards (XP, streaks, achievements, daily challenge)        | Later   |
+| 5     | Arcade modes (Falling Words, race-your-ghost, survival)                   | Later   |
+| 6     | Desktop app (Tauri) + full accessibility pass                             | Later   |
 
 ## 🤝 Contributing
 
