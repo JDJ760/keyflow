@@ -26,6 +26,8 @@ data through someone else's servers. Keyflow is built around three ideas:
 
 ### Available now
 
+- **Five themes** — Liquid Flow, Aurora Glass, Pressroom, Overdrive, and Daylight — switchable live
+- **Stats dashboard** — WPM-over-time chart, practice-calendar heatmap, personal bests, and JSON export/import
 - **Core typing test** — `time`, `words`, `quote`, and `zen` modes with live WPM,
   accuracy, and consistency, character-by-character feedback, and a smooth droplet caret
 - **Results screen** — raw WPM, consistency, time, character breakdown, and personal bests
@@ -116,8 +118,8 @@ See [SECURITY.md](SECURITY.md) for the full policy and how to report a vulnerabi
 | ----- | ------------------------------------------------------------------------- | ------- |
 | 0     | Foundations — tooling, security baseline, CI/CD, docs                     | ✅ Done |
 | 1     | Core typing engine + clean UI (timed / words / quote / zen, live stats)   | ✅ Done |
-| 2     | Rich stats & themes (history charts, practice calendar, export/import)    | 🔜 Next |
-| 3     | Adaptive coaching (weak-key drills, keyboard heatmap, progressive unlock) | Planned |
+| 2     | Rich stats & themes (history charts, practice calendar, export/import)    | ✅ Done |
+| 3     | Adaptive coaching (weak-key drills, keyboard heatmap, progressive unlock) | 🔜 Next |
 | 4     | Progression & rewards (XP, streaks, achievements, daily challenge)        | Later   |
 | 5     | Arcade modes (Falling Words, race-your-ghost, survival)                   | Later   |
 | 6     | Desktop app (Tauri) + full accessibility pass                             | Later   |
