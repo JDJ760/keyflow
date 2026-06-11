@@ -34,7 +34,7 @@ data through someone else's servers. Keyflow is built around three ideas:
   accuracy, and consistency, character-by-character feedback, and a smooth droplet caret
 - **Results screen** — raw WPM, consistency, time, character breakdown, and personal bests
 - The signature **Liquid Flow** theme (plus a light theme) on a token-based theme system
-- Framework-free typing engine with **25 unit tests**; strict React 19 + TypeScript + Tailwind v4
+- Framework-free typing engine with **42 unit tests**; strict React 19 + TypeScript + Tailwind v4
 - Local-first architecture with a hardened security baseline (strict CSP, zero trackers)
 
 ### Coming next (see the [Roadmap](#-roadmap))
