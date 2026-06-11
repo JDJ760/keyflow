@@ -61,10 +61,15 @@ export function TypingView() {
           </div>
           <button
             type="button"
-            onClick={restart}
+            onClick={(e) => {
+              restart()
+              e.currentTarget.blur()
+            }}
             className="text-sm text-subtle transition-colors hover:text-muted"
           >
-            ↻ restart · tab
+            {config.mode === 'zen'
+              ? 'esc to finish · tab to restart'
+              : '↻ restart · tab'}
           </button>
         </div>
       )}

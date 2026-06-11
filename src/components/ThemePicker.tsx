@@ -10,7 +10,11 @@ export function ThemePicker() {
       <span className="hidden sm:inline">theme</span>
       <select
         value={theme}
-        onChange={(e) => setTheme(e.target.value as ThemeName)}
+        onChange={(e) => {
+          setTheme(e.target.value as ThemeName)
+          // Release focus so typing afterwards doesn't navigate the select.
+          e.currentTarget.blur()
+        }}
         aria-label="theme"
         className="cursor-pointer rounded-lg bg-surface/70 px-2 py-1 text-fg backdrop-blur transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none"
       >

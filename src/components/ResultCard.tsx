@@ -41,7 +41,10 @@ export function ResultCard({
       <div className="flex flex-col items-center gap-2">
         <button
           type="button"
-          onClick={onRestart}
+          onClick={(e) => {
+            onRestart()
+            e.currentTarget.blur()
+          }}
           className="rounded-xl bg-primary px-5 py-2 font-semibold text-on-primary transition-transform hover:scale-[1.03]"
         >
           retry

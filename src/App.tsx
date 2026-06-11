@@ -67,7 +67,10 @@ function NavButton({
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={(e) => {
+        onClick()
+        e.currentTarget.blur()
+      }}
       className={`rounded-lg px-3 py-1 font-medium transition-colors ${
         active ? 'text-primary' : 'text-muted hover:text-fg'
       }`}

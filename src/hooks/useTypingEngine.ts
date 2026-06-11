@@ -67,6 +67,23 @@ export function useTypingEngine(config: TestConfig) {
         setNow(Date.now())
         return
       }
+      // Enter retries from the results screen (the on-screen hint promises it).
+      if (e.key === 'Enter') {
+        if (session.status === 'finished') {
+          e.preventDefault()
+          dispatch({ type: 'reset', config })
+          setNow(Date.now())
+        }
+        return
+      }
+      // Zen has no natural end — Escape finishes it and shows results.
+      if (e.key === 'Escape') {
+        if (session.status === 'running' && config.mode === 'zen') {
+          e.preventDefault()
+          dispatch({ type: 'finish', now: Date.now() })
+        }
+        return
+      }
       if (session.status === 'finished') return
       if (e.key === 'Backspace') {
         e.preventDefault()

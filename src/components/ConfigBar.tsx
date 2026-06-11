@@ -100,7 +100,11 @@ function Chip({
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={(e) => {
+        onClick()
+        // Drop focus so the next Space/Enter goes to the test, not this chip.
+        e.currentTarget.blur()
+      }}
       aria-pressed={active}
       className={`rounded-lg px-2.5 py-1 font-medium transition-colors ${
         active ? 'bg-primary text-on-primary' : 'text-muted hover:text-fg'
