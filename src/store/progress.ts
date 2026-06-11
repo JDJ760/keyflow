@@ -30,6 +30,8 @@ export interface ProgressState {
 
 /** A stable key per test variant, so personal bests are compared like-for-like. */
 export function bestKey(config: TestConfig): string {
+  // Drill text is intentionally skewed — keep it out of the normal bests.
+  if (config.drillChars && config.drillChars.length > 0) return 'drill'
   if (config.mode === 'time') return `time:${config.duration}`
   if (config.mode === 'words') return `words:${config.wordCount}`
   return config.mode

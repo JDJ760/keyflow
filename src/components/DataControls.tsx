@@ -1,10 +1,12 @@
 import { useRef, type ChangeEvent } from 'react'
 import { useProgress } from '../store/progress'
+import { useCoach } from '../store/coach'
 import { downloadExport, importAll } from '../storage/dataTransfer'
 
 /** Export / import / clear — the user's data is local, so they fully control it. */
 export function DataControls() {
   const clearAll = useProgress((s) => s.clearAll)
+  const clearStats = useCoach((s) => s.clearStats)
   const fileRef = useRef<HTMLInputElement>(null)
 
   function onImport(e: ChangeEvent<HTMLInputElement>) {
@@ -50,6 +52,7 @@ export function DataControls() {
         onClick={() => {
           if (confirm('Clear all your local stats? This cannot be undone.')) {
             clearAll()
+            clearStats()
           }
         }}
         className="rounded-lg px-3 py-1.5 font-medium text-error transition-colors hover:bg-error/10"

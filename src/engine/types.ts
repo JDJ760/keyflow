@@ -8,6 +8,8 @@ export interface TestConfig {
   wordCount: number
   punctuation: boolean
   numbers: boolean
+  /** when set, text is generated as a drill weighted toward these characters */
+  drillChars?: string[]
 }
 
 export type TestStatus = 'idle' | 'running' | 'finished'

@@ -1,5 +1,5 @@
 import type { Keystroke, Session, TestConfig } from './types'
-import { generateWords, textForConfig } from './generator'
+import { generateDrillWords, generateWords, textForConfig } from './generator'
 import type { Rng } from './rng'
 
 export function createSession(
@@ -126,7 +126,12 @@ export function reducer(state: Session, action: Action): Session {
       return { ...state, status: 'finished', finishedAt: action.now }
 
     case 'extend': {
-      const more = generateWords(30, state.config, action.rng ?? Math.random)
+      const rng = action.rng ?? Math.random
+      const drill = state.config.drillChars
+      const more =
+        drill && drill.length > 0
+          ? generateDrillWords(30, drill, rng)
+          : generateWords(30, state.config, rng)
       return { ...state, words: [...state.words, ...more] }
     }
 

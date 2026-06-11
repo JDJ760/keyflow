@@ -3,7 +3,7 @@
  * persisted localStorage keys directly so a backup round-trips exactly.
  * Everything stays on the user's device — this is just file in / file out.
  */
-const KEYS = ['keyflow:settings', 'keyflow:progress'] as const
+const KEYS = ['keyflow:settings', 'keyflow:progress', 'keyflow:coach'] as const
 
 export function exportAll(): string {
   const data: Record<string, unknown> = {

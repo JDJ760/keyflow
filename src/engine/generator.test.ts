@@ -1,4 +1,4 @@
-import { generateWords, textForConfig } from './generator'
+import { generateDrillWords, generateWords, textForConfig } from './generator'
 import { mulberry32 } from './rng'
 import type { TestConfig } from './types'
 
@@ -24,6 +24,30 @@ describe('generateWords', () => {
   it('can append punctuation when enabled', () => {
     const words = generateWords(200, { punctuation: true }, mulberry32(5))
     expect(words.some((w) => /[.,!?;:']$/.test(w))).toBe(true)
+  })
+})
+
+describe('generateDrillWords', () => {
+  it('is deterministic for a seed and returns the requested count', () => {
+    const a = generateDrillWords(12, ['e', 'r'], mulberry32(7))
+    expect(a).toHaveLength(12)
+    expect(a).toEqual(generateDrillWords(12, ['e', 'r'], mulberry32(7)))
+  })
+
+  it('emphasizes the target characters', () => {
+    const words = generateDrillWords(40, ['e'], mulberry32(9))
+    const withTarget = words.filter((w) => w.includes('e')).length
+    expect(withTarget / words.length).toBeGreaterThan(0.7)
+  })
+
+  it('synthesizes practice words for letters the pool barely covers', () => {
+    const words = generateDrillWords(10, ['z'], mulberry32(3))
+    expect(words).toHaveLength(10)
+    expect(words.every((w) => w.includes('z'))).toBe(true)
+  })
+
+  it('falls back to normal words when no target chars are given', () => {
+    expect(generateDrillWords(5, [], mulberry32(1))).toHaveLength(5)
   })
 })
 

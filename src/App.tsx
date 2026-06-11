@@ -3,9 +3,10 @@ import { useSettings } from './store/settings'
 import { LiquidBackground } from './components/LiquidBackground'
 import { TypingView } from './views/TypingView'
 import { StatsView } from './views/StatsView'
+import { CoachView } from './views/CoachView'
 import { ThemePicker } from './components/ThemePicker'
 
-type View = 'test' | 'stats'
+type View = 'test' | 'stats' | 'coach'
 
 export default function App() {
   const theme = useSettings((s) => s.theme)
@@ -38,13 +39,21 @@ export default function App() {
               >
                 stats
               </NavButton>
+              <NavButton
+                active={view === 'coach'}
+                onClick={() => setView('coach')}
+              >
+                coach
+              </NavButton>
             </nav>
           </div>
           <ThemePicker />
         </header>
 
         <main className="flex flex-1 flex-col">
-          {view === 'test' ? <TypingView /> : <StatsView />}
+          {view === 'test' && <TypingView />}
+          {view === 'stats' && <StatsView />}
+          {view === 'coach' && <CoachView gotoTest={() => setView('test')} />}
         </main>
 
         <footer className="px-6 py-3 text-center text-xs text-subtle">

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useSettings } from '../store/settings'
 import { useProgress } from '../store/progress'
+import { useCoach } from '../store/coach'
 import { useTypingEngine } from '../hooks/useTypingEngine'
 import type { Session, Stats, TestConfig } from '../engine/types'
 import { ConfigBar } from '../components/ConfigBar'
@@ -11,14 +12,27 @@ import { ResultCard } from '../components/ResultCard'
 
 export function TypingView() {
   const { mode, duration, wordCount, punctuation, numbers } = useSettings()
-  const config: TestConfig = useMemo(
-    () => ({ mode, duration, wordCount, punctuation, numbers }),
-    [mode, duration, wordCount, punctuation, numbers],
-  )
+  const activeDrill = useCoach((s) => s.activeDrill)
+  const setActiveDrill = useCoach((s) => s.setActiveDrill)
+  const config: TestConfig = useMemo(() => {
+    // An active drill takes over: short words-mode test of weak-key text.
+    if (activeDrill && activeDrill.length > 0) {
+      return {
+        mode: 'words',
+        duration,
+        wordCount: 25,
+        punctuation: false,
+        numbers: false,
+        drillChars: activeDrill,
+      }
+    }
+    return { mode, duration, wordCount, punctuation, numbers }
+  }, [mode, duration, wordCount, punctuation, numbers, activeDrill])
 
   const { session, stats, remainingMs, restart } = useTypingEngine(config)
   const recordResult = useProgress((s) => s.recordResult)
   const lastResult = useProgress((s) => s.lastResult)
+  const ingest = useCoach((s) => s.ingest)
 
   // Record each finished test exactly once (keyed by session identity). Writing
   // to the external store is a legitimate effect — no React state is set here.
@@ -27,15 +41,36 @@ export function TypingView() {
     if (session.status === 'finished' && recordedSession.current !== session) {
       recordedSession.current = session
       recordResult(session.config, stats)
+      // Feed the coach's per-key analytics with this session's keystrokes.
+      ingest(session.keystrokes)
     }
-  }, [session, stats, recordResult])
+  }, [session, stats, recordResult, ingest])
 
   const finished = session.status === 'finished'
 
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-6">
       <div className="pt-4">
-        <ConfigBar />
+        {config.drillChars ? (
+          <div className="mx-auto flex w-fit items-center gap-3 rounded-2xl bg-surface/60 px-4 py-2 text-sm backdrop-blur">
+            <span className="text-muted">drill</span>
+            <span className="font-mono font-semibold tracking-[0.3em] text-primary">
+              {config.drillChars.join(' ')}
+            </span>
+            <button
+              type="button"
+              onClick={(e) => {
+                setActiveDrill(null)
+                e.currentTarget.blur()
+              }}
+              className="text-muted transition-colors hover:text-fg"
+            >
+              ✕ exit
+            </button>
+          </div>
+        ) : (
+          <ConfigBar />
+        )}
       </div>
 
       {finished ? (

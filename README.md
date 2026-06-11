@@ -26,6 +26,8 @@ data through someone else's servers. Keyflow is built around three ideas:
 
 ### Available now
 
+- **Adaptive coach** — per-key speed & accuracy analytics, a live keyboard heatmap, and
+  one-click **targeted drills** built from your weakest letters
 - **Five themes** — Liquid Flow, Aurora Glass, Pressroom, Overdrive, and Daylight — switchable live
 - **Stats dashboard** — WPM-over-time chart, practice-calendar heatmap, personal bests, and JSON export/import
 - **Core typing test** — `time`, `words`, `quote`, and `zen` modes with live WPM,
@@ -37,9 +39,9 @@ data through someone else's servers. Keyflow is built around three ideas:
 
 ### Coming next (see the [Roadmap](#-roadmap))
 
-- **Rich stats** — history charts, practice calendar, per-key & per-finger breakdowns, export/import
-- **Adaptive coaching** — weak-key detection, auto-generated drills, live keyboard heatmap
-- Progression (XP, streaks, achievements), arcade modes (Falling Words, race-your-ghost), and a desktop build
+- Progression (XP, streaks, achievements, daily challenge), arcade modes (Falling Words,
+  race-your-ghost), and a desktop build
+- Backlog and review notes live in [docs/IMPROVEMENTS.md](docs/IMPROVEMENTS.md)
 
 ## 🚀 Getting started
 
@@ -114,15 +116,15 @@ See [SECURITY.md](SECURITY.md) for the full policy and how to report a vulnerabi
 
 ## 🧭 Roadmap
 
-| Phase | Focus                                                                     | Status  |
-| ----- | ------------------------------------------------------------------------- | ------- |
-| 0     | Foundations — tooling, security baseline, CI/CD, docs                     | ✅ Done |
-| 1     | Core typing engine + clean UI (timed / words / quote / zen, live stats)   | ✅ Done |
-| 2     | Rich stats & themes (history charts, practice calendar, export/import)    | ✅ Done |
-| 3     | Adaptive coaching (weak-key drills, keyboard heatmap, progressive unlock) | 🔜 Next |
-| 4     | Progression & rewards (XP, streaks, achievements, daily challenge)        | Later   |
-| 5     | Arcade modes (Falling Words, race-your-ghost, survival)                   | Later   |
-| 6     | Desktop app (Tauri) + full accessibility pass                             | Later   |
+| Phase | Focus                                                                    | Status  |
+| ----- | ------------------------------------------------------------------------ | ------- |
+| 0     | Foundations — tooling, security baseline, CI/CD, docs                    | ✅ Done |
+| 1     | Core typing engine + clean UI (timed / words / quote / zen, live stats)  | ✅ Done |
+| 2     | Rich stats & themes (history charts, practice calendar, export/import)   | ✅ Done |
+| 3     | Adaptive coaching (per-key analytics, keyboard heatmap, targeted drills) | ✅ Done |
+| 4     | Progression & rewards (XP, streaks, achievements, daily challenge)       | 🔜 Next |
+| 5     | Arcade modes (Falling Words, race-your-ghost, survival)                  | Later   |
+| 6     | Desktop app (Tauri) + full accessibility pass                            | Later   |
 
 ## 🤝 Contributing
 
