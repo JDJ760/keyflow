@@ -26,6 +26,7 @@ data through someone else's servers. Keyflow is built around three ideas:
 
 ### Available now
 
+- **Progression** — XP & levels, daily streaks, 13 achievements, and a seeded **daily challenge**
 - **Adaptive coach** — per-key speed & accuracy analytics, a live keyboard heatmap, and
   one-click **targeted drills** built from your weakest letters
 - **Five themes** — Liquid Flow, Aurora Glass, Pressroom, Overdrive, and Daylight — switchable live
@@ -122,8 +123,8 @@ See [SECURITY.md](SECURITY.md) for the full policy and how to report a vulnerabi
 | 1     | Core typing engine + clean UI (timed / words / quote / zen, live stats)  | ✅ Done |
 | 2     | Rich stats & themes (history charts, practice calendar, export/import)   | ✅ Done |
 | 3     | Adaptive coaching (per-key analytics, keyboard heatmap, targeted drills) | ✅ Done |
-| 4     | Progression & rewards (XP, streaks, achievements, daily challenge)       | 🔜 Next |
-| 5     | Arcade modes (Falling Words, race-your-ghost, survival)                  | Later   |
+| 4     | Progression & rewards (XP, streaks, achievements, daily challenge)       | ✅ Done |
+| 5     | Arcade modes (Falling Words, race-your-ghost, survival)                  | 🔜 Next |
 | 6     | Desktop app (Tauri) + full accessibility pass                            | Later   |
 
 ## 🤝 Contributing

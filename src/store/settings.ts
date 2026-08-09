@@ -24,6 +24,8 @@ export interface SettingsState {
   punctuation: boolean
   numbers: boolean
   theme: ThemeName
+  dailyChallenge: boolean
+  toggleDaily: () => void
   setMode: (mode: TestMode) => void
   setDuration: (duration: number) => void
   setWordCount: (wordCount: number) => void
@@ -42,6 +44,8 @@ export const useSettings = create<SettingsState>()(
       punctuation: false,
       numbers: false,
       theme: 'liquid',
+      dailyChallenge: false,
+      toggleDaily: () => set((s) => ({ dailyChallenge: !s.dailyChallenge })),
       setMode: (mode) => set({ mode }),
       setDuration: (duration) => set({ duration }),
       setWordCount: (wordCount) => set({ wordCount }),

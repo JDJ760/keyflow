@@ -76,6 +76,13 @@ export function ConfigBar() {
           </Group>
         </>
       )}
+
+      <Divider />
+      <Group>
+        <Chip active={s.dailyChallenge} onClick={s.toggleDaily}>
+          ★ daily
+        </Chip>
+      </Group>
     </div>
   )
 }

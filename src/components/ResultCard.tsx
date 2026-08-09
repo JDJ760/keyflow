@@ -1,22 +1,55 @@
 import type { ReactNode } from 'react'
 import type { Stats } from '../engine/types'
+import type { LastResult } from '../store/progress'
+import { ACHIEVEMENTS } from '../engine/progression'
 
-/** End-of-test summary: headline WPM + accuracy, supporting metrics, and a
- * personal-best flag. */
+/** End-of-test summary: headline WPM + accuracy, supporting metrics, rewards
+ * (xp, level-ups, achievements), and a personal-best flag. */
 export function ResultCard({
   stats,
-  isBest,
+  result,
   onRestart,
 }: {
   stats: Stats
-  isBest: boolean
+  result: LastResult | null
   onRestart: () => void
 }) {
+  const earnedNames = (result?.newAchievements ?? [])
+    .map((id) => ACHIEVEMENTS.find((a) => a.id === id)?.name)
+    .filter(Boolean)
+
   return (
     <div className="flex w-full max-w-lg flex-col items-center gap-7 rounded-3xl bg-surface/50 px-8 py-10 backdrop-blur">
-      {isBest && (
-        <div className="rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold tracking-wide text-primary uppercase">
-          ★ new personal best
+      {(result?.isBest || result?.leveledUp || (result?.xpGained ?? 0) > 0) && (
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {result?.isBest && (
+            <span className="rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold tracking-wide text-primary uppercase">
+              ★ new personal best
+            </span>
+          )}
+          {(result?.xpGained ?? 0) > 0 && (
+            <span className="rounded-full bg-correct/10 px-3 py-1 text-xs font-semibold tracking-wide text-correct uppercase">
+              +{result?.xpGained} xp
+            </span>
+          )}
+          {result?.leveledUp && (
+            <span className="rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold tracking-wide text-primary uppercase">
+              ⬆ level up
+            </span>
+          )}
+        </div>
+      )}
+
+      {earnedNames.length > 0 && (
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {earnedNames.map((name) => (
+            <span
+              key={name}
+              className="rounded-full bg-overlay/70 px-3 py-1 text-xs font-semibold text-fg"
+            >
+              🏆 {name}
+            </span>
+          ))}
         </div>
       )}
 

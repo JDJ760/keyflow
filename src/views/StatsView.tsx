@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { useProgress } from '../store/progress'
+import { ACHIEVEMENTS } from '../engine/progression'
 import { summarize } from '../stats/aggregate'
 import { WpmHistoryChart } from '../components/WpmHistoryChart'
 import { PracticeCalendar } from '../components/PracticeCalendar'
@@ -7,6 +8,7 @@ import { DataControls } from '../components/DataControls'
 
 export function StatsView() {
   const history = useProgress((s) => s.history)
+  const unlocked = useProgress((s) => s.achievements)
   const summary = summarize(history)
 
   return (
@@ -37,6 +39,32 @@ export function StatsView() {
           </Panel>
         </>
       )}
+
+      <Panel title={`achievements · ${unlocked.length}/${ACHIEVEMENTS.length}`}>
+        <ul className="grid gap-2 sm:grid-cols-2">
+          {ACHIEVEMENTS.map((a) => {
+            const got = unlocked.includes(a.id)
+            return (
+              <li
+                key={a.id}
+                className={`flex items-center gap-3 rounded-xl px-3 py-2 ${
+                  got ? 'bg-overlay/50' : 'opacity-45'
+                }`}
+              >
+                <span aria-hidden="true">{got ? '🏆' : '🔒'}</span>
+                <span>
+                  <span className="block text-sm font-semibold text-fg">
+                    {a.name}
+                  </span>
+                  <span className="block text-xs text-muted">
+                    {a.description}
+                  </span>
+                </span>
+              </li>
+            )
+          })}
+        </ul>
+      </Panel>
 
       <Panel title="your data">
         <DataControls />

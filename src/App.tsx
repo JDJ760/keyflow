@@ -1,5 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { useSettings } from './store/settings'
+import { useProgress } from './store/progress'
+import { levelFromXp, levelProgress } from './engine/progression'
 import { LiquidBackground } from './components/LiquidBackground'
 import { TypingView } from './views/TypingView'
 import { StatsView } from './views/StatsView'
@@ -47,7 +49,10 @@ export default function App() {
               </NavButton>
             </nav>
           </div>
-          <ThemePicker />
+          <div className="flex items-center gap-4">
+            <LevelBadge />
+            <ThemePicker />
+          </div>
         </header>
 
         <main className="flex flex-1 flex-col">
@@ -61,6 +66,31 @@ export default function App() {
         </footer>
       </div>
     </>
+  )
+}
+
+function LevelBadge() {
+  const xp = useProgress((s) => s.xp)
+  const streak = useProgress((s) => s.streak)
+  const level = levelFromXp(xp)
+  const progress = levelProgress(xp)
+
+  return (
+    <div
+      className="flex items-center gap-2 text-sm text-muted"
+      title={`${xp} xp`}
+    >
+      <span className="font-mono font-semibold">lv {level}</span>
+      <span className="h-1.5 w-14 overflow-hidden rounded-full bg-surface">
+        <span
+          className="block h-full rounded-full bg-primary transition-[width]"
+          style={{ width: `${Math.round(progress * 100)}%` }}
+        />
+      </span>
+      {streak.current > 0 && (
+        <span title="day streak">🔥 {streak.current}</span>
+      )}
+    </div>
   )
 }
 

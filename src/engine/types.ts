@@ -10,6 +10,8 @@ export interface TestConfig {
   numbers: boolean
   /** when set, text is generated as a drill weighted toward these characters */
   drillChars?: string[]
+  /** when set, text generation is deterministic (daily challenge) */
+  seed?: number
 }
 
 export type TestStatus = 'idle' | 'running' | 'finished'

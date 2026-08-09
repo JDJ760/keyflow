@@ -1,12 +1,12 @@
 import type { Keystroke, Session, TestConfig } from './types'
 import { generateDrillWords, generateWords, textForConfig } from './generator'
-import type { Rng } from './rng'
+import { mulberry32, type Rng } from './rng'
 
-export function createSession(
-  config: TestConfig,
-  rng: Rng = Math.random,
-): Session {
-  const { words, quoteSource } = textForConfig(config, rng)
+export function createSession(config: TestConfig, rng?: Rng): Session {
+  // A seeded config (daily challenge) generates the same text every time.
+  const effectiveRng =
+    rng ?? (config.seed != null ? mulberry32(config.seed) : Math.random)
+  const { words, quoteSource } = textForConfig(config, effectiveRng)
   return {
     config,
     words,

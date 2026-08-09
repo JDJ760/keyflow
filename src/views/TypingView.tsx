@@ -2,6 +2,11 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useSettings } from '../store/settings'
 import { useProgress } from '../store/progress'
 import { useCoach } from '../store/coach'
+import { dailySeed } from '../engine/progression'
+import { dateKey } from '../stats/aggregate'
+
+// Day-resolution timestamp captured at load (keeps Date.now out of render).
+const TODAY_KEY = dateKey(Date.now())
 import { useTypingEngine } from '../hooks/useTypingEngine'
 import type { Session, Stats, TestConfig } from '../engine/types'
 import { ConfigBar } from '../components/ConfigBar'
@@ -12,6 +17,8 @@ import { ResultCard } from '../components/ResultCard'
 
 export function TypingView() {
   const { mode, duration, wordCount, punctuation, numbers } = useSettings()
+  const dailyChallenge = useSettings((s) => s.dailyChallenge)
+  const toggleDaily = useSettings((s) => s.toggleDaily)
   const activeDrill = useCoach((s) => s.activeDrill)
   const setActiveDrill = useCoach((s) => s.setActiveDrill)
   const config: TestConfig = useMemo(() => {
@@ -26,8 +33,27 @@ export function TypingView() {
         drillChars: activeDrill,
       }
     }
+    // The daily challenge: same seeded 50 words for everyone, every retry.
+    if (dailyChallenge) {
+      return {
+        mode: 'words',
+        duration,
+        wordCount: 50,
+        punctuation: false,
+        numbers: false,
+        seed: dailySeed(TODAY_KEY),
+      }
+    }
     return { mode, duration, wordCount, punctuation, numbers }
-  }, [mode, duration, wordCount, punctuation, numbers, activeDrill])
+  }, [
+    mode,
+    duration,
+    wordCount,
+    punctuation,
+    numbers,
+    activeDrill,
+    dailyChallenge,
+  ])
 
   const { session, stats, remainingMs, restart } = useTypingEngine(config)
   const recordResult = useProgress((s) => s.recordResult)
@@ -68,6 +94,23 @@ export function TypingView() {
               ✕ exit
             </button>
           </div>
+        ) : dailyChallenge ? (
+          <div className="mx-auto flex w-fit items-center gap-3 rounded-2xl bg-surface/60 px-4 py-2 text-sm backdrop-blur">
+            <span className="text-muted">★ daily challenge</span>
+            <span className="font-mono font-semibold text-primary">
+              {TODAY_KEY}
+            </span>
+            <button
+              type="button"
+              onClick={(e) => {
+                toggleDaily()
+                e.currentTarget.blur()
+              }}
+              className="text-muted transition-colors hover:text-fg"
+            >
+              ✕ exit
+            </button>
+          </div>
         ) : (
           <ConfigBar />
         )}
@@ -75,11 +118,7 @@ export function TypingView() {
 
       {finished ? (
         <div className="flex flex-1 items-center justify-center py-10">
-          <ResultCard
-            stats={stats}
-            isBest={lastResult?.isBest ?? false}
-            onRestart={restart}
-          />
+          <ResultCard stats={stats} result={lastResult} onRestart={restart} />
         </div>
       ) : (
         <div className="flex flex-1 flex-col items-center justify-center gap-9 py-8">
